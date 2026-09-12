@@ -8,8 +8,11 @@
 
 | 教材 | テーマ | 状態 |
 | --- | --- | --- |
+| [Robot Learning: A Tutorial](materials/robot-learning-tutorial/README.md) | ロボット学習・LeRobot・実機実習 | 学習中 |
 
-最初の教材を受け取ったら登録する。気になるリンクだけの大量登録はせず、実際に取り組む教材を中心に追加する。
+気になるリンクだけの大量登録はせず、実際に取り組む教材を中心に追加する。
+
+現在の学習環境は [環境メモ](docs/environment.md) を参照。
 
 ## ディレクトリ構成
 
