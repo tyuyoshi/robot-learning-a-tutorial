@@ -1,0 +1,20 @@
+# Local copies of source materials, datasets, and generated outputs
+/local/
+
+# Credentials and machine-specific configuration
+.env
+.env.*
+!.env.example
+/.agents/
+/.codex/
+
+# Common local Python and notebook artifacts
+.venv/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.pytest_cache/
+
+# Operating system metadata
+.DS_Store
+Thumbs.db
