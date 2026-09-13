@@ -1,0 +1,39 @@
+{
+  "robot": {
+    "type": "so101_follower",
+    "port": "/dev/serial/by-id/usb-1a86_USB_Single_Serial_5B90101147-if00",
+    "id": "so101_follower_white",
+    "calibration_dir": "local/so101/calibration/follower",
+    "max_relative_target": 5,
+    "cameras": {
+      "wrist": {
+        "type": "zmq",
+        "server_address": "172.24.144.1",
+        "port": 5555,
+        "camera_name": "wrist",
+        "width": 640,
+        "height": 480,
+        "fps": 10
+      }
+    }
+  },
+  "teleop": {
+    "type": "so101_leader",
+    "port": "/dev/serial/by-id/usb-1a86_USB_Single_Serial_5B90103226-if00",
+    "id": "so101_leader_black",
+    "calibration_dir": "local/so101/calibration/leader"
+  },
+  "dataset": {
+    "repo_id": "local/so101-lift-smoke-001",
+    "root": "local/so101/datasets/lift-smoke-001",
+    "single_task": "Pick up the small object, lift it slightly, and put it back on the table.",
+    "fps": 10,
+    "episode_time_s": 60,
+    "reset_time_s": 10,
+    "num_episodes": 1,
+    "push_to_hub": false,
+    "video": true
+  },
+  "display_data": false,
+  "play_sounds": false
+}

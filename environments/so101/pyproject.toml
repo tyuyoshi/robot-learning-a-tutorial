@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Isolated LeRobot environment for SO-101 hardware practice"
 requires-python = ">=3.12,<3.13"
 dependencies = [
-    "lerobot[feetech]==0.6.1",
+    "lerobot[dataset,feetech]==0.6.1",
     "pyzmq==27.1.0",
 ]
 
