@@ -118,4 +118,10 @@ Initial pose matching is approximate, so the physical comparison is exploratory.
 Validation: parsed the exact JSON through the installed rollout parser without
 connecting hardware, asserting coefficient 0.01, one action step, checkpoint,
 duration, FPS, target limit, no teleoperator/dataset, and disabled return motion.
-Physical ensemble trial is pending user execution.
+The user executed the ensemble trial and reported less shaking than before and
+felt that it came close to completing the task. Grasp/lift success is unconfirmed.
+This is a subjective observation from an unrecorded trial, with approximately
+matched starting conditions, not a repeated controlled measurement. Model weights
+were unchanged; this is an inference change, not learning during execution.
+Before extending duration, determine whether the timer interrupted progress,
+the gripper closed off-target, or the arm stalled before reaching the object.
