@@ -47,4 +47,44 @@ the final log lines. Black-arm motion does not affect this run. Do not increase
 duration or limits simply to force a grasp.
 
 Validation: installed LeRobot 0.6.1 rollout code inspected; configuration parsed
-without building a hardware context. Physical rollout is pending user execution.
+without building a hardware context. The user then executed the physical checks
+below. Completion of the loop is not task success.
+
+## 2026-09-13: startup failure, oscillation, and manual comparison
+
+- At 17:58 startup failed on motor 6 (gripper), writing `Lock=1`: no status packet.
+  Policy and camera loaded, but autonomous control did not start. A prior recording
+  had failed on motor 2 with an incorrect status packet. Root cause is unconfirmed.
+  The `so100_follower` log label is a shared configuration alias; the JSON still
+  selects SO101 and the correct white follower port and calibration.
+- At 18:01 the user reported shaking without task progress. The ten-second loop
+  and disconnect completed. No motor communication exception appeared in that log.
+  Wrist target commands alternated around -83 and -70 degrees. Clamp warnings show
+  only selected ticks, not the complete action sequence. The 2.2Hz warning appeared
+  once at startup; it does not establish sustained 2.2Hz operation.
+- CPU diagnostic: five `select_action` calls on the identical saved first image
+  and state of recording 003 produced maximum output difference 0.0. Rollout code
+  uses eval mode. This rules out random variation for that tested input, not every
+  source of instability on hardware.
+- Working hypotheses: an insufficiently learned policy and/or observations unlike
+  training may form an oscillating feedback loop. Camera delay and physical control
+  effects remain possible. Do not label the cause established, increase the target
+  limit, or keep repeating autonomous motion. Temporal smoothing could reduce
+  oscillation but would not demonstrate learned task completion.
+
+The user subsequently ran the following manual diagnostic, with the model absent:
+
+```sh
+uv run --project environments/so101 --frozen lerobot-record --config_path=environments/so101/record_smoke.json --dataset.repo_id=local/so101-teleop-check-001 --dataset.root=local/so101/datasets/teleop-check-001 --dataset.episode_time_s=15
+```
+
+Verified 150 finite state/action rows and 150 decoded video frames. In order
+pan/lift/elbow/wrist-flex/wrist-roll/gripper, leader-vs-follower MAE was
+0.80/0.92/1.48/0.88/3.10 degrees and 0.19 percentage points. Follower motion spans
+were 18.37/4.66/61.63/52.04/91.52 degrees and 0.21 points. Thus several joints moved,
+but the leader shoulder-lift span was only 0.44 degrees and the gripper was barely
+operated: this is not a complete joint motion test. Mean error alone does not prove
+absence of shaking. The user's observation of manual smoothness is pending.
+
+Keep this diagnostic recording separate from training examples; the inherited
+pick-and-place task text is not a claim that a grasp was attempted or completed.
