@@ -1,0 +1,25 @@
+{
+  "dataset": {
+    "repo_id": "local/so101-lift-smoke-003",
+    "root": "local/so101/datasets/lift-smoke-003",
+    "video_backend": "pyav",
+    "eval_split": 0.0
+  },
+  "policy": {
+    "type": "act",
+    "device": "cuda",
+    "push_to_hub": false,
+    "chunk_size": 10,
+    "n_action_steps": 1
+  },
+  "output_dir": "local/so101/outputs/act-smoke-003",
+  "job_name": "act-smoke-003",
+  "batch_size": 4,
+  "num_workers": 0,
+  "steps": 1000,
+  "log_freq": 50,
+  "save_freq": 500,
+  "env_eval_freq": 0,
+  "eval_steps": 0,
+  "wandb": {"enable": false}
+}
