@@ -68,3 +68,35 @@ The hold-position baseline scored 0.75, 1.73, 2.26, 8.30, 2.66 degrees and 2.21
 points respectively. ACT improves on that baseline only for wrist flex/roll in
 this aggregate comparison. Long stationary sections can favor the baseline;
 neither result measures grasp success. Raw per-frame values are in the local CSV.
+
+## Temporal ensembling comparison (offline)
+
+```sh
+uv run --project environments/so101 --frozen python environments/so101/inspect_act_predictions.py --device cuda --ensemble-coeff 0.01 --output local/so101/analysis/ensemble-train-003
+uv run --project environments/so101 --frozen python environments/so101/inspect_act_predictions.py --device cuda --ensemble-coeff 0.01 --repo-id local/so101-teleop-check-001 --root local/so101/datasets/teleop-check-001 --output local/so101/analysis/ensemble-teleop-check-001
+```
+
+Both runs completed with finite predictions (600 and 150 frames). The comparison
+uses the same predicted chunks for each alternative and LeRobot's official
+`ACTTemporalEnsembler`. It averages predictions made at different observation times
+for the **same target time**, using only current/past observations and resetting at
+episode boundaries. This is not averaging commands for different target times.
+Coefficient 0.01 slightly favors older predictions in this installed implementation;
+zero enables uniform averaging, while omitting the option disables this comparison.
+Normalization is restored from the checkpoint, and results are unnormalized.
+
+Training recording, wrist-flex mean absolute change per adjacent 0.1s frame:
+1.90 -> 0.52 degrees. Its target MAE decreased 5.35 -> 4.92 degrees. All six channels
+showed lower average changes and lower MAE on this recording.
+
+Manual diagnostic, wrist-flex average change: 2.35 -> 0.50 degrees; target MAE
+39.57 -> 38.50 degrees. Elbow MAE remained about 48 degrees. This diagnostic asks
+for arbitrary manual movements, not the trained pick-and-place task: these errors
+are not a valid grasp-generalization score. They show smoothing does not make the
+model reproduce those different commands. They also do not diagnose the cause of
+the prior live oscillation: the autonomous trajectory was not recorded.
+
+Reduced command variation is not proof of reduced physical vibration. The replay
+uses fixed recorded observations, not a world responding to the predicted commands.
+No model weights, live rollout settings, or motor gains were changed. Keep live
+autonomous retries paused pending a controlled follow-up.
