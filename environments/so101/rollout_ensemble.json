@@ -1,0 +1,37 @@
+{
+  "robot": {
+    "type": "so101_follower",
+    "port": "/dev/serial/by-id/usb-1a86_USB_Single_Serial_5B90101147-if00",
+    "id": "so101_follower_white",
+    "calibration_dir": "local/so101/calibration/follower",
+    "max_relative_target": 5,
+    "cameras": {
+      "wrist": {
+        "type": "zmq",
+        "server_address": "172.24.144.1",
+        "port": 5555,
+        "camera_name": "wrist",
+        "width": 640,
+        "height": 480,
+        "fps": 10
+      }
+    }
+  },
+  "strategy": {
+    "type": "base"
+  },
+  "inference": {
+    "type": "sync"
+  },
+  "fps": 10,
+  "duration": 10,
+  "device": "cuda",
+  "task": "Pick up the small object, lift it slightly, and put it back on the table.",
+  "return_to_initial_position": false,
+  "display_data": false,
+  "play_sounds": false,
+  "policy": {
+    "path": "local/so101/outputs/act-smoke-003/checkpoints/001000/pretrained_model",
+    "temporal_ensemble_coeff": 0.01
+  }
+}

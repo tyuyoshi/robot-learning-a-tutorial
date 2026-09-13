@@ -88,3 +88,34 @@ absence of shaking. The user's observation of manual smoothness is pending.
 
 Keep this diagnostic recording separate from training examples; the inherited
 pick-and-place task text is not a claim that a grasp was attempted or completed.
+
+## Temporal ensemble: next short comparison
+
+The user clarified that manual operation followed the leader with some roughness,
+unlike the autonomous trial that shook without task progress. An offline comparison
+then reduced command variation using temporal ensembling (see TRAINING.md).
+
+`rollout_ensemble.json` retains the original hardware, 10Hz, ten-second duration,
+target delta limit 5, and disabled return motion. It references the same 001000
+checkpoint and overrides only `temporal_ensemble_coeff=0.01`. The saved checkpoint
+and original rollout config are unchanged. There is no retraining.
+
+With the existing Windows camera publisher running, other control processes stopped,
+and a similar initial arm pose, object placement, and camera view to the previous
+trial, run in Ubuntu (moves the white arm; black cannot intervene):
+
+```sh
+uv run --project environments/so101 --frozen lerobot-rollout --config_path=environments/so101/rollout_ensemble.json
+```
+
+Keep the earlier power/clearance/stop precautions. Stop immediately for sustained
+shaking or contact; do not wait ten seconds to see whether it improves. On disconnect
+the arm loses holding torque. This base-mode trial does not record video or actions.
+Report shaking separately from task progress: less shaking, motion toward the
+object, and any contact/stop. A ten-second observation is not a grasp success rate.
+Initial pose matching is approximate, so the physical comparison is exploratory.
+
+Validation: parsed the exact JSON through the installed rollout parser without
+connecting hardware, asserting coefficient 0.01, one action step, checkpoint,
+duration, FPS, target limit, no teleoperator/dataset, and disabled return motion.
+Physical ensemble trial is pending user execution.
