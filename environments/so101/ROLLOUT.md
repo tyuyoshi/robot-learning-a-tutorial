@@ -125,3 +125,29 @@ matched starting conditions, not a repeated controlled measurement. Model weight
 were unchanged; this is an inference change, not learning during execution.
 Before extending duration, determine whether the timer interrupted progress,
 the gripper closed off-target, or the arm stalled before reaching the object.
+
+## Record the next ten-second trial
+
+The user reported possible missed grasp followed by stopping, but could not
+separate that from the time limit. `rollout_ensemble_record.json` switches to
+episodic recording: one ten-second episode, no reset motion, no automatic return,
+no leader, and no Hub upload. Policy, camera, FPS and target limit stay the same.
+Recording adds overhead, so timing may differ from the previous base-mode trial.
+
+```sh
+uv run --project environments/so101 --frozen lerobot-rollout --config_path=environments/so101/rollout_ensemble_record.json
+```
+
+Start the Windows camera publisher, close other arm-control processes, and restore
+the prior object/camera/starting-pose setup using the precautions above. White
+moves autonomously; black cannot intervene. Stop for shaking/contact with Ctrl+C.
+Ten seconds limits the episode loop; final video encoding can take longer and the
+robot remains connected until teardown, so wait for disconnection before handling.
+Do not wait for encoding in a physical emergency: cut follower power if needed.
+
+Output: `local/so101/datasets/eval-ensemble-001` (new directory, never overwrite an
+earlier trial). This is diagnostic policy execution, not training demonstrations.
+Review camera frames, recorded actions/states and terminal timing together to
+distinguish off-target closure from time-limit termination. The camera may not
+show all contact points, and nominal timestamps do not measure capture latency.
+Configuration parsing was validated without hardware; physical recording is pending.
