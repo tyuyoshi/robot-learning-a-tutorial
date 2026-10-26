@@ -10,3 +10,5 @@ dependencies = [
 
 [tool.uv]
 package = false
+# eMudhra/emSign CA 証明書インシデント対応（certifi 2026.10.23 で該当 CA を削除）
+constraint-dependencies = ["certifi>=2026.10.23"]
