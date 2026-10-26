@@ -1,6 +1,10 @@
 # /// script
 # requires-python = ">=3.12,<3.13"
 # dependencies = ["opencv-python-headless==4.13.0.92", "pyzmq==27.1.0"]
+#
+# [tool.uv]
+# # eMudhra/emSign CA 証明書インシデント対応: 0.13.4 以前の uv は侵害された CA を信頼する
+# required-version = ">=0.13.5"
 # ///
 """Windows camera publisher compatible with LeRobot 0.6.1 ZMQCamera."""
 

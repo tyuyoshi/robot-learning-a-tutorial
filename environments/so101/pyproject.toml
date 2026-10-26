@@ -12,3 +12,5 @@ dependencies = [
 package = false
 # eMudhra/emSign CA 証明書インシデント対応（certifi 2026.10.23 で該当 CA を削除）
 constraint-dependencies = ["certifi>=2026.10.23"]
+# uv 0.13.4 以前は自前の CA リストに侵害された emSign 系ルートを含むため、0.13.5 以上を必須にする
+required-version = ">=0.13.5"
