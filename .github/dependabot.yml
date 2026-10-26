@@ -5,5 +5,6 @@ updates:
     schedule:
       interval: "weekly"
     ignore:
-      # docs と設定 JSON が LeRobot 0.6.1 前提のため、版上げは手動で行う（セキュリティ更新は対象外にならない）
+      # docs と設定 JSON が LeRobot 0.6.1 前提のため、マイナー/メジャーの版上げは手動で行う（パッチ版は受け取る）
       - dependency-name: "lerobot"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
