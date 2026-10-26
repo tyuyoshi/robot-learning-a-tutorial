@@ -4,3 +4,6 @@ updates:
     directory: "/environments/so101"
     schedule:
       interval: "weekly"
+    ignore:
+      # docs と設定 JSON が LeRobot 0.6.1 前提のため、版上げは手動で行う（セキュリティ更新は対象外にならない）
+      - dependency-name: "lerobot"
