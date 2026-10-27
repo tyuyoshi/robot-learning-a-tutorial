@@ -1,0 +1,10 @@
+version: 2
+updates:
+  - package-ecosystem: "uv"
+    directory: "/environments/so101"
+    schedule:
+      interval: "weekly"
+    ignore:
+      # docs と設定 JSON が LeRobot 0.6.1 前提のため、マイナー/メジャーの版上げは手動で行う（パッチ版は受け取る）
+      - dependency-name: "lerobot"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]

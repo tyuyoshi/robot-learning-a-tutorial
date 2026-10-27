@@ -7,7 +7,7 @@
 - 学習者の申告：SO-101 リーダー＋フォロワー2台セット。組立済みと思われるが現物未確認。
 - 購入相談では Seeed / Cytron の Assembled Kit Pro を選んだ経緯。購入相談に記載された仕様を現物確認済みとは扱わない。
 - 付属カメラありと申告。Seeed の公式商品写真では黒がリーダー、白がフォロワー。学習者は黒へ5V・3A、白へ12V・2Aの付属電源を接続し直したと報告。その後クランプ固定と既存IDでの通信を確認した。
-- PC は [環境メモ](environment.md) を参照。WSL 内の Python は 3.12.3、uv は利用可能。
+- PC は [環境メモ](environment.md) を参照。WSL 内の Python は 3.12.3、uv は利用可能。uv は WSL・Windows とも 0.13.5 以上が必要（eMudhra/emSign CA 証明書インシデント対応。`environments/so101/pyproject.toml` と `windows_camera_server.py` の `required-version` で強制）。古い場合は `uv self update`（Homebrew 等で入れた場合はそのパッケージマネージャで更新）。
 - usbipd-win 5.3.0 を学習者が導入。両アームの bind / attach に成功し、Windows 側で Attached を確認した。
 - サンドボックス外で WSL 側の2ポートを確認。学習者は `sudo usermod -aG dialout "$USER"` と `newgrp dialout` を実行し、現在のターミナルで `id` に dialout が含まれることを確認した。既存の別プロセスにグループ変更が反映されているとは限らない。
 - 両腕をクランプで固定済みと学習者が報告。両腕の校正ファイルを保存し、テレオペレーションの初動を確認済み。モーターIDの再設定は実施していない。
