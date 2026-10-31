@@ -5,7 +5,7 @@ description = "Isolated LeRobot environment for SO-101 hardware practice"
 requires-python = ">=3.12,<3.13"
 dependencies = [
     "lerobot[dataset,feetech,training]==0.6.1",
-    "pyzmq==27.1.0",
+    "pyzmq==27.2.0",
 ]
 
 [tool.uv]
